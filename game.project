@@ -1,0 +1,23 @@
+[project]
+title = Idle
+
+[bootstrap]
+main_collection = /example/main.collectionc
+
+[input]
+game_binding = /example/input/game.input_bindingc
+use_accelerometer = 0
+
+[display]
+width = 1280
+height = 720
+
+[script]
+shared_state = 1
+
+[windows]
+app_icon = /assets/appicons/appicon.ico
+
+[osx]
+app_icon = /assets/appicons/appicon.icns
+
