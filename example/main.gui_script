@@ -4,6 +4,11 @@ function init(self)
 	self.number = 2
 	self.node = gui.get_node("text")
 	gui.set_text(self.node, idle.display_number(self.number))
+
+	num = 1000000
+	print(idle.display_number(num)) --> 1 M	
+	num = 1000000
+	print(idle.display_number(num, 3)) --> 1 million 
 end
 
 function final(self)
@@ -12,8 +17,8 @@ function final(self)
 end
 
 function update(self, dt)
-	self.number = self.number + math.random(100000000000) * 1000
-	gui.set_text(self.node, idle.display_number(self.number) .. "\n" .. self.number)
+	self.number = self.number + math.random(100000) * math.random(100000000)
+	gui.set_text(self.node, idle.display_number(self.number, 3) .. "\n" .. self.number)
 end
 
 function on_message(self, message_id, message, sender)
