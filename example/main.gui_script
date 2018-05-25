@@ -82,16 +82,16 @@ end
 
 function on_input(self, action_id, action)
 	if action_id == hash("touch") then
-		if gui.pick_node(self.node_btn_make_widget, action.screen_x, action.screen_y) and action.released then
+		if gui.pick_node(self.node_btn_make_widget, action.x, action.y) and action.released then
 			self.number_of_widgets = self.number_of_widgets + 1
-		elseif gui.pick_node(self.node_btn_buy_factory, action.screen_x, action.screen_y) and action.repeated then
+		elseif gui.pick_node(self.node_btn_buy_factory, action.x, action.y) and action.repeated then
 			if self.number_of_widgets >= self.factory_cost then
 				self.number_of_widgets = self.number_of_widgets - self.factory_cost
 				self.number_of_factories = self.number_of_factories + 1
 				self.factory_cost = self.factory_cost + 2 * self.number_of_factories
 				gui.set_text(self.node_factory_cost, "(" .. self.factory_cost .. " Widgets)")
 			end
-		elseif gui.pick_node(self.node_btn_buy_mega_factory, action.screen_x, action.screen_y) and action.repeated then
+		elseif gui.pick_node(self.node_btn_buy_mega_factory, action.x, action.y) and action.repeated then
 			if self.number_of_widgets >= self.mega_factory_cost then
 				self.number_of_widgets = self.number_of_widgets - self.mega_factory_cost
 				self.number_of_mega_factories = self.number_of_mega_factories + 1
