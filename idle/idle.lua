@@ -1,5 +1,10 @@
 local M = {}
 
+M.growth_functions = {
+	example = function (base, rate) return base * rate end,
+	
+}
+
 function M.display_number(num, type)
 	type = type or 2
 	local suffixes = { 
@@ -26,7 +31,7 @@ function M.display_number(num, type)
 	" octogintillion"," unoctogintillion"," duooctogintillion"," treoctogintillion"," quattuoroctogintillion"," quinoctogintillion"," sexoctogintillion",
 	" septoctogintillion"," octooctogintillion"," novemoctogintillion"," nonagintillion"," unnonagintillion"," duononagintillion", " trenonagintillion ",
 	" quattuornonagintillion "," quinnonagintillion "," sexnonagintillion "," septnonagintillion "," octononagintillion "," novemnonagintillion ", " centillion"}
-}
+	}
 
 
 	local place = 1

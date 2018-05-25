@@ -14,6 +14,8 @@ Using
 * type 2 = K,M,B,T,aa,bb ...
 * type 3 = thousand, million, billion, trillion ...
 
+Default is type 2
+
 Examples
 
 ```

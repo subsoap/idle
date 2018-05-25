@@ -1,14 +1,31 @@
 local idle = require("idle.idle")
 
 function init(self)
-	self.number = 2
-	self.node = gui.get_node("text")
-	gui.set_text(self.node, idle.display_number(self.number))
+	self.number_of_widgets = 0
+	self.number_of_factories = 0
+	self.number_of_mega_factories = 0
+	self.factory_cost = 10
+	self.mega_factory_cost = 30
+	self.factory_rate = 1
+	self.mega_factory_rate = 3
+	
+	self.text_node = gui.get_node("text")
 
-	num = 1000000
-	print(idle.display_number(num)) --> 1 M	
-	num = 1000000
-	print(idle.display_number(num, 3)) --> 1 million 
+	self.node_btn_make_widget = gui.get_node("btn_make_widget")
+	self.node_btn_buy_factory = gui.get_node("btn_buy_factory")
+	self.node_btn_buy_mega_factory = gui.get_node("btn_buy_mega_factory")
+
+	self.node_factory_cost = gui.get_node("text_factory_cost")
+	self.node_mega_factory_cost = gui.get_node("text_mega_factory_cost")
+
+	gui.set_text(self.node_factory_cost, "(" .. self.factory_cost .. " Widgets)")
+	gui.set_text(self.node_mega_factory_cost, "(" .. self.mega_factory_cost .. " Widgets)")	
+	
+	self.update_timer = 1
+
+	self.node_tick_timer = gui.get_node("tick_timer")
+	self.tick_timer_scale = vmath.vector3(1,1,1)
+	
 end
 
 function final(self)
@@ -16,9 +33,26 @@ function final(self)
 	-- Remove this function if not needed
 end
 
+local function process_factories(self)
+	local income = 0
+	income = income + self.factory_rate * self.number_of_factories
+	income = income + self.mega_factory_rate * self.number_of_mega_factories
+	self.number_of_widgets = self.number_of_widgets + income
+end
+
 function update(self, dt)
-	self.number = self.number + math.random(100000) * math.random(100000000)
-	gui.set_text(self.node, idle.display_number(self.number, 3) .. "\n" .. self.number)
+	self.update_timer = self.update_timer - dt
+	if self.update_timer <= 0 then
+		self.update_timer = self.update_timer + 1
+		process_factories(self)
+	end
+	self.tick_timer_scale.x = 1 - self.update_timer
+	gui.set_scale(self.node_tick_timer , self.tick_timer_scale)
+	
+	local text = "" .. "Widgets: " .. idle.display_number(self.number_of_widgets, 2)
+	gui.set_text(self.text_node, text)
+
+
 end
 
 function on_message(self, message_id, message, sender)
@@ -27,8 +61,25 @@ function on_message(self, message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
-	-- Add input-handling code here
-	-- Remove this function if not needed
+	if action_id == hash("touch") and action.released then
+		if gui.pick_node(self.node_btn_make_widget, action.screen_x, action.screen_y) then
+			self.number_of_widgets = self.number_of_widgets + 1
+		elseif gui.pick_node(self.node_btn_buy_factory, action.screen_x, action.screen_y) then
+			if self.number_of_widgets >= self.factory_cost then
+				self.number_of_widgets = self.number_of_widgets - self.factory_cost
+				self.number_of_factories = self.number_of_factories + 1
+				self.factory_cost = self.factory_cost + 2 * self.number_of_factories
+				gui.set_text(self.node_factory_cost, "(" .. self.factory_cost .. " Widgets)")
+			end
+		elseif gui.pick_node(self.node_btn_buy_mega_factory, action.screen_x, action.screen_y) then
+			if self.number_of_widgets >= self.mega_factory_cost then
+				self.number_of_widgets = self.number_of_widgets - self.mega_factory_cost
+				self.number_of_mega_factories = self.number_of_mega_factories + 1
+				self.mega_factory_cost = self.mega_factory_cost + 2 * self.number_of_mega_factories
+				gui.set_text(self.node_mega_factory_cost, "(" .. self.mega_factory_cost .. " Widgets)")
+			end						
+		end
+	end
 end
 
 function on_reload(self)
