@@ -44,7 +44,7 @@ function M.display_number(num, type)
 	num = math.floor(num * 10 ) / 10
 
 	if suffixes[type][place] == nil then 
-		return tostring(num) .. " I+" .. tostring(place - #suffixes)
+		return tostring(num) .. " I+" .. tostring(place - #suffixes[type])
 	end
 	
 	return tostring(num) .. suffixes[type][place]

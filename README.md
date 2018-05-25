@@ -2,9 +2,13 @@
 Toolkit useful for making incremental / idle games with Defold
 
 ## Installing
+
 Library
+
 ```https://github.com/subsoap/idle/archive/master.zip```
+
 Using
+
 ```local idle = require("idle.idle")```
 
 ### idle.display_number(num, type)

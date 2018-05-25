@@ -7,6 +7,8 @@ main_collection = /example/main.collectionc
 [input]
 game_binding = /example/input/game.input_bindingc
 use_accelerometer = 0
+repeat_delay = 0.4
+repeat_interval = 0.05
 
 [display]
 width = 1280
