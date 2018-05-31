@@ -4,6 +4,9 @@ title = Idle
 [bootstrap]
 main_collection = /example/main.collectionc
 
+[library]
+include_dirs = idle
+
 [input]
 game_binding = /example/input/game.input_bindingc
 use_accelerometer = 0
